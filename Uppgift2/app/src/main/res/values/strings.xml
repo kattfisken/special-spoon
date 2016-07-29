@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Uppgift2</string>
+    <string name="title_activity_display_number">DisplayNumber</string>
+    <string name="welcome_screen_message">Hello World!</string>
+</resources>
