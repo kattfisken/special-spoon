@@ -14,11 +14,13 @@
 
 
     <android.support.v7.widget.AppCompatTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    <!-- todo lägg till default-text
-        todo skapa funktioner som uppdaterar med det största kända primtalet
-        -->
+        android:id="@+id/prime_text_view"
+        android:text="The Xth prime is 123. It took Y seconds to omput it, and was finished on ZZZZ."
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        />
+    <!-- todo gör snyggare -->
 
 
 </RelativeLayout>

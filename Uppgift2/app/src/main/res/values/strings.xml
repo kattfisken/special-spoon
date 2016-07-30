@@ -1,5 +1,10 @@
 <resources>
     <string name="app_name">Uppgift2</string>
     <string name="title_activity_display_number">DisplayNumber</string>
-    <string name="welcome_screen_message">Hello World!</string>
+    <string name="welcome_screen_message">This app display prime numbers.\n
+    By pressing the button below, you will access a database of prime numbers and display the largest yet computed prime number.\n
+    In the next screen you may choose to display larger or smaller primes than this.\n
+    If the requested prime is not present in the database it is computed and added to the database.\n
+    The database is saved into the internal storage of the android system and resumed when opening the app again.</string>
+    <string name="btn_text_display_primes">Show primes</string>
 </resources>

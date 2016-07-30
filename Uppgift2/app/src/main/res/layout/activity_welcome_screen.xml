@@ -12,18 +12,16 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/welcome_screen_message" />
-    <!-- todo formattera texten -->
-    <!-- todo uppdatera tresursen -->
+        android:text="@string/welcome_screen_message"
+        />
 
-
-
-
-    <!-- todo skapa knapp -->
-    <!-- todo snygga till knappen -->
-    <!-- todo koppla knapp till att starta ny activity -->
-
-
-
+    <android.support.v7.widget.AppCompatButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:text="@string/btn_text_display_primes"
+        android:id="@+id/number_act_btn"
+        />
 
 </RelativeLayout>
