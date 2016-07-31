@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Uppgift3</string>
+    <string name="info_about_app">Welcome to your multimedia diary. Take a photo, record an audio and a film from your day.
+        Once you\'ve done on recording you can\'t make a new one. Enjoy!</string>
+</resources>
