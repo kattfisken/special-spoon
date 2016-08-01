@@ -125,8 +125,6 @@ public class MainActivity extends AppCompatActivity {
 
         mp = new MediaPlayer();
 
-
-
         try {
             mp.setDataSource(myAudio);
             mp.prepare();
@@ -165,7 +163,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void recordVideo (View v){
-        Intent takeVideoIntent = new Intent (MediaStore.ACTION_VIDEO_CAPTURE);
+        Intent takeVideoIntent;
+        takeVideoIntent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+
         if(takeVideoIntent.resolveActivity(getPackageManager())!= null){
             startActivityForResult(takeVideoIntent,REQUEST_VIDEO_CAPTURE);
         }
