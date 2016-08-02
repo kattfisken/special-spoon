@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="?android:attr/listPreferredItemHeight">
+
+    <android.support.v7.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:id="@+id/link_title"
+        android:text="Title"
+        />
+
+    <android.support.v7.widget.AppCompatImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/link_symbol"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/link_title"
+        android:src="@android:drawable/presence_video_online"/>
+
+    <android.support.v7.widget.AppCompatButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/link_symbol"
+        android:layout_toRightOf="@id/link_symbol"
+        android:id="@+id/link_btn"
+        android:text="http://foo.bar/some/data/"
+        style="@style/Widget.AppCompat.Button.Borderless"/>
+
+
+    <android.support.v7.widget.AppCompatImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@android:drawable/sym_action_email"
+        android:layout_toRightOf="@id/link_btn"
+        android:id="@+id/link_email_button"
+        android:layout_alignTop="@id/link_symbol"
+        />
+
+
+</RelativeLayout>
