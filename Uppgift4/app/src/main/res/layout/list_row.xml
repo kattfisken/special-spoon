@@ -39,5 +39,7 @@
         android:layout_alignTop="@id/link_symbol"
         />
 
+    <!-- todo fix max width so email button always shows -->
+
 
 </RelativeLayout>

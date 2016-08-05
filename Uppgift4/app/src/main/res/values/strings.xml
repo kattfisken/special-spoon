@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Uppgift4</string>
+    <string name="sb_text_no_email_client">No emailing applications found</string>
+    <string name="attatchement_button_text">Select attachment</string>
+    <string name="attachment_chooser_header">Choose proof for fun-ness</string>
+    <string name="attachment_button_text_replace">click again to replace!</string>
+    <string name="snackbar_no_attachment">No attachment picked</string>
 </resources>

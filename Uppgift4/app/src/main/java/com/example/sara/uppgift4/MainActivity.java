@@ -20,21 +20,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ArrayList <LinkInfo> linkInfoArrayList;
-        linkInfoArrayList = new ArrayList<LinkInfo>();
-        linkInfoArrayList.add(new LinkInfo(
-                LinkInfo.WEB_PAGE_LINK
-                ,"http://9gag.com/gag/aKBpPXN"
-                ,"20 exemples of cat logic" ));
-        linkInfoArrayList.add(new LinkInfo(
-                LinkInfo.YOUTUBE_LINK
-                ,"UpJXqaCNzIw"
-                ,"Cat confused by post it note" ));
-        linkInfoArrayList.add(new LinkInfo(
-                LinkInfo.YOUTUBE_LINK,"_BRp7ezUqbI","Cat vs cucumber"));
-
-        LinkInfoAdapter sara;
-        sara = new LinkInfoAdapter(this,R.layout.list_row, linkInfoArrayList);
+        ArrayList <LinkInfo> linkInfoArrayList = theListMaker();
+        LinkInfoAdapter sara = new LinkInfoAdapter(this,R.layout.list_row, linkInfoArrayList);
 
         ListView linkListView;
         View linkListViewAsView;
@@ -42,6 +29,16 @@ public class MainActivity extends AppCompatActivity {
         linkListView = (ListView)linkListViewAsView;
         linkListView.setAdapter(sara);
     }
-
-
+ 
+    private ArrayList<LinkInfo> theListMaker() {
+        ArrayList<LinkInfo> linkInfoArrayList = new ArrayList<LinkInfo>();
+        linkInfoArrayList.add(new LinkInfo(LinkInfo.WEB_PAGE_LINK,"https://www.acc.umu.se/~zqad/cats/index.html","Kattalogen" ));
+        linkInfoArrayList.add(new LinkInfo(LinkInfo.YOUTUBE_LINK,"UpJXqaCNzIw","Cat confused by post it note" ));
+        linkInfoArrayList.add(new LinkInfo(LinkInfo.YOUTUBE_LINK,"_BRp7ezUqbI","Cat vs cucumber"));
+        linkInfoArrayList.add(new LinkInfo(LinkInfo.WEB_PAGE_LINK,"http://www.eatliver.com/brexit-cat/","Advice cat on Brexit"));
+        linkInfoArrayList.add(new LinkInfo(LinkInfo.YOUTUBE_LINK,"sI8NsYIyQ2A","Why do cats act so wierd"));
+        return linkInfoArrayList;
     }
+
+
+}

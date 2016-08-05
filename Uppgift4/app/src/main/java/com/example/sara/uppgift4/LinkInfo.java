@@ -1,12 +1,11 @@
 package com.example.sara.uppgift4;
 
-/**
- * Created by ludvig on 2016-08-02.
- */
-public class LinkInfo {
+import java.io.Serializable;
+
+public class LinkInfo implements Serializable {
 
         public String linkType;
-        public String url;
+        public String data;
         public String title;
 
         public static  final String YOUTUBE_LINK = "youtube_video";
@@ -14,9 +13,21 @@ public class LinkInfo {
 
 
         public LinkInfo (String linkType_input,String tu,String i){
-            url = tu;
+            data = tu;
             title = i;
             linkType = linkType_input;
         }
+
+
+    public String getUrl() {
+        String s;
+        //todo förklara skillnad på == och equals
+        if (linkType.equals(YOUTUBE_LINK)) {
+            s = "https://www.youtube.com/watch?v="+data;
+        } else  {
+            s = data;
+        }
+        return s;
+    }
 
 }
