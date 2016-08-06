@@ -21,75 +21,83 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 public class LinkInfoAdapter extends ArrayAdapter<LinkInfo> {
-        ArrayList<LinkInfo> data;
+    ArrayList<LinkInfo> data;
 
-    public LinkInfoAdapter(Context c, int layoutResourceId, ArrayList <LinkInfo> inData){
-            super (c, layoutResourceId, inData);
-            data = inData;
+    public LinkInfoAdapter(Context c, int layoutResourceId, ArrayList<LinkInfo> inData) {
+        super(c, layoutResourceId, inData);
+        data = inData;
+    }
 
+    public View getView(int pos, View convertView, ViewGroup parent) {
+        View boxWithLinkInfo; // this will become one row in the list view
+        boxWithLinkInfo = convertView;
+        if (boxWithLinkInfo == null) {
+            boxWithLinkInfo = inflateConvertView();
         }
-        public View getView(int pos, View convertView, ViewGroup parent){
-            View boxWithLinkInfo;
-            boxWithLinkInfo = convertView;
-            if (boxWithLinkInfo == null){
-                boxWithLinkInfo = inflateConvertView();
-            }
-            final LinkInfo item;
-            item = data.get(pos);
-            if (item != null) {
+        final LinkInfo item;
+        item = data.get(pos);
+        if (item != null) {
 
-                TextView title = (TextView)boxWithLinkInfo.findViewById(R.id.link_title);
-                Button url = (Button) boxWithLinkInfo.findViewById(R.id.link_btn);
+            TextView title = (TextView) boxWithLinkInfo.findViewById(R.id.link_title);
+            Button url = (Button) boxWithLinkInfo.findViewById(R.id.link_btn);
 
-                title.setText(item.title);
-                url.setText(item.data);
+            title.setText(item.title);
+            url.setText(item.data);
 
-                View.OnClickListener l = null;
+            View.OnClickListener l = null;
 
-                if (item.linkType == LinkInfo.WEB_PAGE_LINK){
+            if (item.linkType == LinkInfo.WEB_PAGE_LINK) {
 
-                    l = updateViewForWebPage(boxWithLinkInfo, item);
+                l = updateViewForWebPage(boxWithLinkInfo, item);
 
-                } else if (item.linkType == LinkInfo.YOUTUBE_LINK ){
+            } else if (item.linkType == LinkInfo.YOUTUBE_LINK) {
 
-                    l = updateViewForYoutubeVideo(boxWithLinkInfo, item);
-
-                }
-                url.setOnClickListener(l);
-
-                ImageButton emailButton = (ImageButton) boxWithLinkInfo.findViewById(R.id.link_email_button);
-                ImageButton.OnClickListener listen = new EmailOnClickListener("Hej Hopp Gumisnopp", item);
-                emailButton.setOnClickListener(listen);
+                l = updateViewForYoutubeVideo(boxWithLinkInfo, item);
 
             }
+            url.setOnClickListener(l);
 
-            return boxWithLinkInfo;
+            ImageButton emailButton = (ImageButton) boxWithLinkInfo.findViewById(R.id.link_email_button);
+            ImageButton.OnClickListener listen = new EmailOnClickListener("Hej Hopp Gumisnopp", item);
+            emailButton.setOnClickListener(listen);
 
         }
 
-        private View inflateConvertView(){
-            Object inflaterAsObject;
-            inflaterAsObject = getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            LayoutInflater inflater;
-            inflater = (LayoutInflater) inflaterAsObject;
-            return inflater.inflate(R.layout.list_row, null);
-        }
+        return boxWithLinkInfo;
 
-        private Button.OnClickListener updateViewForWebPage(View boxWithLinkInfo, final LinkInfo item) {
-            ImageView picture;
-            picture = (ImageView)boxWithLinkInfo.findViewById(R.id.link_symbol);
-            picture.setImageResource(android.R.drawable.ic_menu_directions);
+    }
 
-            Button.OnClickListener l = new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent i = new Intent(getContext(),BrowserActivity.class);
-                    i.putExtra(Constants.LINK_INFO_ITEM,item);
-                    getContext().startActivity(i);
-                }
-            };
-            return l;
-        }
+    private View inflateConvertView() {
+        Object inflaterAsObject;
+        inflaterAsObject = getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater inflater;
+        inflater = (LayoutInflater) inflaterAsObject;
+        return inflater.inflate(R.layout.list_row, null);
+    }
+
+    /**
+     * This function updates a view that will become a row in the list view with a new symbole that
+     * represents a web page link and returns a listener that provides action for clicking the link
+     *
+     * @param boxWithLinkInfo a view object that will become a row in the list view
+     * @param item            the link info object containing the link data
+     * @return listener opening a browser in action
+     */
+    private Button.OnClickListener updateViewForWebPage(View boxWithLinkInfo, final LinkInfo item) {
+        ImageView picture;
+        picture = (ImageView) boxWithLinkInfo.findViewById(R.id.link_symbol);
+        picture.setImageResource(android.R.drawable.ic_menu_directions);
+
+        Button.OnClickListener l = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getContext(), BrowserActivity.class);
+                i.putExtra(Constants.LINK_INFO_ITEM, item);
+                getContext().startActivity(i);
+            }
+        };
+        return l;
+    }
 
     private Button.OnClickListener updateViewForYoutubeVideo(View boxWithLinkInfo, final LinkInfo item) {
         Button.OnClickListener l = new View.OnClickListener() {
@@ -100,9 +108,9 @@ public class LinkInfoAdapter extends ArrayAdapter<LinkInfo> {
                 i = new Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube:" + item.data));
                 if (i.resolveActivity(getContext().getPackageManager()) != null) {
                     getContext().startActivity(i);
-                }else{
+                } else {
                     Toast toast;
-                    toast = Toast.makeText(getContext(),"There is no youtube video shower installed",Toast.LENGTH_LONG);
+                    toast = Toast.makeText(getContext(), "There is no youtube video shower installed", Toast.LENGTH_LONG);
                     toast.show();
                 }
 
@@ -112,19 +120,19 @@ public class LinkInfoAdapter extends ArrayAdapter<LinkInfo> {
         return l;
     }
 
-    private class EmailOnClickListener implements ImageButton.OnClickListener  {
+    private class EmailOnClickListener implements ImageButton.OnClickListener {
         String message;
         LinkInfo item;
 
-        public EmailOnClickListener(String aMessage, LinkInfo anItem){
+        public EmailOnClickListener(String aMessage, LinkInfo anItem) {
             message = aMessage;
             item = anItem;
         }
 
         @Override
         public void onClick(View v) {
-            Intent i = new Intent(getContext(),EmailActivity.class);
-            i.putExtra(Constants.LINK_INFO_ITEM,item);
+            Intent i = new Intent(getContext(), EmailActivity.class);
+            i.putExtra(Constants.LINK_INFO_ITEM, item);
             getContext().startActivity(i);
         }
     }

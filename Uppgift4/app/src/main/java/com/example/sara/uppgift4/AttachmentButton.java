@@ -25,7 +25,7 @@ public class AttachmentButton extends Button {
 
     public AttachmentButton(Context context, AttributeSet attrs) {
         super(context, attrs);
-        setText(R.string.attatchement_button_text);
+        //setText(R.string.attatchement_button_text);
         setOnClickListener(new AttachmentButtonListener());
     }
 

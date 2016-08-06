@@ -35,16 +35,10 @@ public class EmailActivity extends AppCompatActivity {
         Bundle b = getIntent().getExtras();
         LinkInfo item = (LinkInfo) b.getSerializable(Constants.LINK_INFO_ITEM);
 
-
-//todo gör genomtänkt
         //title.setText("");
         String s = "Email body default text";
         if (item != null) {
-            s = "Look at this amazing cat link: " +
-                    "url:" + item.getUrl() + "\n" +
-                    "title:" + item.title + "\n" +
-                    "type:" + item.linkType + "\n" +
-                    "";
+            s = "Look at this amazing cat link:\n"+ item.getUrl();
         } else {
             Log.d(Constants.LOG_TAG, "couldn't find item");
         }
@@ -57,6 +51,12 @@ public class EmailActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Callback function to be called when StartActivityForResult is finished eg. choosing attachment or sending email.
+     * @param requestCode An integer defined in Class constant identifying what activity is finished.
+     * @param resultCode Result code according to Androids standard.
+     * @param data The result data from other activity.
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // Check which request we're responding to
@@ -113,7 +113,7 @@ public class EmailActivity extends AppCompatActivity {
 
 
         if (!areValidEmails(recipients)) {
-            Snackbar sb = Snackbar.make(v, "Check recipient email format", Snackbar.LENGTH_INDEFINITE);
+            Snackbar sb = Snackbar.make(v, "Check recipient email format", Snackbar.LENGTH_LONG);
             sb.show();
            Log.d(Constants.LOG_TAG,"bad target email(s)");
         } else {

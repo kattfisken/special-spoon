@@ -29,7 +29,11 @@ public class MainActivity extends AppCompatActivity {
         linkListView = (ListView)linkListViewAsView;
         linkListView.setAdapter(sara);
     }
- 
+
+    /**
+     * Method for generating a small database of cat links
+     * @return the database
+     */
     private ArrayList<LinkInfo> theListMaker() {
         ArrayList<LinkInfo> linkInfoArrayList = new ArrayList<LinkInfo>();
         linkInfoArrayList.add(new LinkInfo(LinkInfo.WEB_PAGE_LINK,"https://www.acc.umu.se/~zqad/cats/index.html","Kattalogen" ));

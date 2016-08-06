@@ -2,57 +2,65 @@
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:isScrollContainer="true">
+    android:isScrollContainer="true"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin">
 
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <!-- todo make hints smart -->
-        <!-- todo style header -->
+
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/email_header"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Finalize email" />
+            android:text="@string/header_new_email"
+            style="@style/TextAppearance.AppCompat.Headline"/>
 
-        <!-- todo set min/max width for inputs -->
+
         <android.support.v7.widget.AppCompatEditText
             android:id="@+id/input_to"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
             android:layout_below="@id/email_header"
-            android:hint="your@recipient.com"
+            android:hint="@string/email_recipient_hint"
+            android:ems="10"
             android:inputType="textEmailAddress" />
 
-        <!--todo move text to resources-->
+
         <android.support.v7.widget.AppCompatEditText
             android:id="@+id/input_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_below="@id/input_to"
-            android:hint="Hint text shown when field is empty"
+            android:hint="@string/email_subject_hint"
+            android:minEms="10"
             android:inputType="textEmailSubject|textAutoCorrect" />
 
         <com.example.sara.uppgift4.AttachmentButton
             android:id="@+id/email_btn_attachment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@string/attatchement_button_text"
             android:layout_below="@id/input_title" />
 
         <android.support.v7.widget.AppCompatEditText
             android:id="@+id/input_body"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:lines="3"
             android:layout_alignParentLeft="true"
             android:layout_below="@id/email_btn_attachment"
-            android:hint="Hint text for body.
-             Shown when field empty"
-            android:inputType="textMultiLine|textAutoCorrect" />
+            android:hint="@string/email_message_hint"
+            android:inputType="textMultiLine|textAutoCorrect"
+            />
+
 
 
     </RelativeLayout>

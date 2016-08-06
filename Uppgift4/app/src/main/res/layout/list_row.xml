@@ -10,36 +10,43 @@
         android:layout_alignParentLeft="true"
         android:id="@+id/link_title"
         android:text="Title"
+        style="@style/Base.TextAppearance.AppCompat.Title"
         />
 
     <android.support.v7.widget.AppCompatImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/link_sym_height"
+        android:layout_height="@dimen/link_sym_height"
         android:id="@+id/link_symbol"
         android:layout_alignParentLeft="true"
         android:layout_below="@id/link_title"
-        android:src="@android:drawable/presence_video_online"/>
+        android:src="@android:drawable/presence_video_online" />
 
     <android.support.v7.widget.AppCompatButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="128dp"
+        android:layout_height="@dimen/link_sym_height"
         android:layout_alignTop="@id/link_symbol"
         android:layout_toRightOf="@id/link_symbol"
         android:id="@+id/link_btn"
+        android:paddingTop="0dp"
+        android:paddingBottom="0dp"
         android:text="http://foo.bar/some/data/"
+        android:textAlignment="viewStart"
+        android:gravity="start"
         style="@style/Widget.AppCompat.Button.Borderless"/>
 
 
     <android.support.v7.widget.AppCompatImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/link_sym_height"
+        android:layout_height="@dimen/link_sym_height"
         android:src="@android:drawable/sym_action_email"
         android:layout_toRightOf="@id/link_btn"
         android:id="@+id/link_email_button"
         android:layout_alignTop="@id/link_symbol"
+        android:scaleType="fitCenter"
+        android:adjustViewBounds="true"
+        android:padding="0dp"
         />
 
-    <!-- todo fix max width so email button always shows -->
 
 
 </RelativeLayout>
