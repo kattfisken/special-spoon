@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Uppgift 6.1</string>
+    <string name="toast_no_permission">You have not given permission to view call log</string>
+</resources>
