@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Uppgift 6.1</string>
     <string name="toast_no_permission">You have not given permission to view call log</string>
+    <string name="error_msg_no_phone_app">No phone application detected</string>
 </resources>
