@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Uppgift 7.1.1</string>
+    <string name="copy_message">Here you can write something that you want to copy</string>
+    <string name="paste_message">Here you can paste something you want to paste</string>
+    <string name="copy_text_to_button">copy</string>
+    <string name="paste_text_to_button">paste</string>
+</resources>
