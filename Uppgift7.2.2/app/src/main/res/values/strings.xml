@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Uppgift 7.2.2</string>
+    <string name="button_for_vibrations">Push the button for vibrations</string>
+    <string name="button">Push me!</string>
+</resources>
