@@ -1,15 +1,15 @@
 package com.example.sara.dinneraid;
 
-import java.io.Serializable;
 
-public class ShoppingListLine implements Serializable {
-    public enum GroceryCategory {
-        MEAT,DAIRY,VEGETABLES
-    }
+
+public class ShoppingListLine {
+
 
     private String content;
     private boolean isDone;
     private GroceryCategory category;
+    private int color;
+
 
     public GroceryCategory getCategory() {
         return category;
@@ -24,11 +24,22 @@ public class ShoppingListLine implements Serializable {
     }
 
     public ShoppingListLine( String inContent, GroceryCategory inCategory) {
+        // provide default value for inDone
+        this(inContent,inCategory,false);
+    }
+
+    public ShoppingListLine(String inContent, GroceryCategory inCategory, boolean inDone) {
         category = inCategory;
         content = inContent;
+        isDone = inDone;
     }
 
     public void toggleDone() {
         isDone = !isDone;
+    }
+
+    public String toString() {
+        String s = isDone ? "[x]" : "[ ]";
+        return s+" "+content+" "+" ("+category.toString()+")";
     }
 }

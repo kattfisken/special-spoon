@@ -1,4 +1,15 @@
 <resources>
     <string name="app_name">Dinner Aid</string>
     <string name="title_activity_shopping_list">ShoppingListActivity</string>
+
+    <!-- n.b. the order of categories matters! they correpond to colors in color.xml -->
+    <string-array
+        name="grocery_categories">
+        <item>Meat</item>
+        <item>Diary</item>
+        <item>Vegetables</item>
+        <item>Fish</item>
+        <item>Colonial</item>
+        <item>Flour etc</item>
+    </string-array>
 </resources>

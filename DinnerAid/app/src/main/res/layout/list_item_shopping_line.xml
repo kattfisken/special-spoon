@@ -1,35 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
 
     <android.support.v7.widget.AppCompatTextView
+        android:layout_width="@dimen/category_name_width"
+        android:layout_height="wrap_content"
+        android:id="@+id/text_category"
+        android:text="Vegetables"
+        android:textStyle="bold"
+        />
+
+    <android.support.v7.widget.AppCompatTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/text_content"
-        android:text="content"
+        android:text="1 grön paprika"
+        android:layout_toRightOf="@id/text_category"
         />
 
-    <android.support.v7.widget.AppCompatTextView
+
+
+    <android.support.v7.widget.AppCompatCheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/text_category"
-        android:text="category"
+        android:id="@+id/checkbox_is_done"
+        android:layout_alignParentRight="true"
         />
 
-    <android.support.v7.widget.AppCompatTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="is done?"
-        />
-
-    <android.support.v7.widget.AppCompatTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/text_is_done"
-        android:text="maybe"
-        />
-
-</LinearLayout>
+</RelativeLayout>

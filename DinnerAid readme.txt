@@ -4,10 +4,9 @@
 	- sort (enum)
 	- köpt/inte (bool)
 2) presentera i lista
-
+3) menyn skall ha en knapp "filter" som poppar upp en vy med checkrutor för varje kategori och en separat checkruta för köta/inte
 
 ###############################################3 KVAR ATT GÖRA
-3) filtrerbar lista på sort & köpt/inte 
 4) styla så köpa saker är gråa och kategorierna har en färg
 5) skapa en "clear"-funktion som tar bort all eller bara de inköpta
 6) skapa FAB som lägger till en statisk
