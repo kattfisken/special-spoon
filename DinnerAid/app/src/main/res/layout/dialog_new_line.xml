@@ -7,7 +7,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="What to buy?"
-        android:id="@+id/new_content"/>
+        android:id="@+id/new_content"
+        android:inputType="textAutoCorrect|textCapSentences"
+        android:lines="1"
+        />
 
     <android.support.v7.widget.AppCompatSpinner
         android:layout_width="wrap_content"

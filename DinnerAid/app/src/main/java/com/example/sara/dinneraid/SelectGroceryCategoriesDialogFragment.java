@@ -14,8 +14,7 @@ import java.util.ArrayList;
 public class SelectGroceryCategoriesDialogFragment extends DialogFragment {
 
         public interface GroceryCategoryFilterDialogListener {
-            public void onOkay(String filterString);
-            public void onCancel();
+            public void filterShoppingList(String filterString);
         }
 
     // Use this instance of the interface to deliver action events
@@ -71,8 +70,8 @@ public class SelectGroceryCategoriesDialogFragment extends DialogFragment {
                     .setPositiveButton("Filter", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int id) {
-                            // User clicked OK, so save the mSelectedItems results somewhere
-                            // or return them to the component that opened the dialog
+
+                            // todo pass an array of the categories, and let the activity codify it as string
                             Log.d(Constants.LOG_TAG,"want to apply the filter");
                             Log.d(Constants.LOG_TAG,"selection:"+mSelectedItems);
                             StringBuilder sb = new StringBuilder();
@@ -84,7 +83,8 @@ public class SelectGroceryCategoriesDialogFragment extends DialogFragment {
                                     sb.append(allCats[j]);
                                 }
                             }
-                            mListener.onOkay(sb.toString());
+                            mListener.filterShoppingList(sb.toString());
+                            // end todo
                         }
                     })
                     .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

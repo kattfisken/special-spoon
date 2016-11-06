@@ -1,7 +1,10 @@
 package com.example.sara.dinneraid;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Typeface;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.ListViewCompat;
 import android.util.Log;
@@ -22,7 +25,6 @@ import java.util.List;
 
 public class ShoppingListLineAdapter extends ArrayAdapter<ShoppingListLine> implements Filterable {
 
-    ViewHolder viewHolder;
     ArrayList<ShoppingListLine> filteredData;
     ArrayList<ShoppingListLine> originalData;
 
@@ -43,16 +45,6 @@ public class ShoppingListLineAdapter extends ArrayAdapter<ShoppingListLine> impl
         }
     }
 
-    /**
-     * A ViewHolder is used to reduce the number of calls to getviewbyid.
-     * It is apparently a good practice...
-     */
-    private static class ViewHolder {
-        private CheckBox isDoneView;
-        private TextView contentView;
-        private TextView categoryView;
-    }
-
     public int getCount() {
         return filteredData.size();
     }
@@ -65,10 +57,10 @@ public class ShoppingListLineAdapter extends ArrayAdapter<ShoppingListLine> impl
         return position;
     }
 
-    public ShoppingListLineAdapter(Context context, int textViewResourceId, ArrayList<ShoppingListLine> items) {
-        super(context, textViewResourceId, items);
-        filteredData = items;
-        originalData = items;
+    public ShoppingListLineAdapter(Context context, int textViewResourceId, ArrayList<ShoppingListLine> data) {
+        super(context, textViewResourceId, data);
+        filteredData = data;
+        originalData = data;
     }
 
     /**
@@ -86,69 +78,31 @@ public class ShoppingListLineAdapter extends ArrayAdapter<ShoppingListLine> impl
          * this is a trick for cpu efficiacy
           */
         if (convertView == null) {
-            convertView = LayoutInflater.from(this.getContext())
-                    .inflate(R.layout.list_item_shopping_line, parent, false);
-
-            viewHolder = new ViewHolder();
-            viewHolder.isDoneView= (CheckBox) convertView.findViewById(R.id.checkbox_is_done);
-            viewHolder.contentView = (TextView) convertView.findViewById(R.id.text_content);
-            viewHolder.categoryView = (TextView) convertView.findViewById(R.id.text_category);
-
-            convertView.setTag(viewHolder);
-        } else {
-            viewHolder = (ViewHolder) convertView.getTag();
+            convertView = new ShoppingListLineView(getContext());
         }
 
-        /**
-         * populate the view!
-         */
         final ShoppingListLine item = getItem(position);
         if (item!= null) {
-            viewHolder.contentView.setText(String.format("%s", item.getContent()));
-            viewHolder.categoryView.setText(String.format("%s", item.getCategory()));
+            ShoppingListLineView v = (ShoppingListLineView) convertView;
+            v.setData(item);
+            v.render();
 
-            if(item.getIsDone()) {
-                viewHolder.isDoneView.setChecked(item.getIsDone());
-
-                viewHolder.categoryView.setTextColor(ContextCompat.getColor(getContext(),R.color.color_category_done));
-                viewHolder.categoryView.setTypeface(null, Typeface.BOLD_ITALIC);
-
-                viewHolder.contentView.setTextColor(ContextCompat.getColor(getContext(),R.color.color_category_done));
-                viewHolder.contentView.setTypeface(null, Typeface.ITALIC);
-
-            } else {
-
-                viewHolder.isDoneView.setChecked(item.getIsDone());
-                viewHolder.categoryView.setTextColor(item.getCategory().getColor());
-
-            }
-
-            viewHolder.isDoneView.setOnClickListener(new View.OnClickListener() {
+            v.setCheckBoxListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View arg0) {
-                    RelativeLayout lineTimeView = (RelativeLayout) arg0.getParent();
-                    TextView content = (TextView) lineTimeView.findViewById(R.id.text_content);
-                    TextView category = (TextView) lineTimeView.findViewById(R.id.text_category);
-                    CheckBox doneBox = (CheckBox) arg0;
-                    final boolean isChecked = doneBox.isChecked();
+                public void onClick(View checkBox) {
+                    /** get the view in which the clicked checkbox sits
+                    * N.B my custom compound view subclass RelativeLayout, and has a layout with RelativeLayout as its root view
+                    * thus i need to go two steps up the hierarchy to reach the listView
+                     */
+                    ShoppingListLineView lineView = (ShoppingListLineView) checkBox.getParent().getParent();
 
-                    ListViewCompat lv = (ListViewCompat) lineTimeView.getParent();
-                    int position = lv.getPositionForView(lineTimeView);
+                    // update state of underlying data
+                    ListViewCompat lv = (ListViewCompat) lineView.getParent();
+                    int position = lv.getPositionForView(lineView);
                     ((ShoppingListLineAdapter) lv.getAdapter()).getItem(position).toggleDone();
 
-                    if (isChecked) {
-                        category.setTextColor(ContextCompat.getColor(getContext(),R.color.color_category_done));
-                        category.setTypeface(null, Typeface.BOLD_ITALIC);
-                        content.setTextColor(ContextCompat.getColor(getContext(),R.color.color_category_done));
-                        content.setTypeface(null, Typeface.ITALIC);
-
-
-                    } else {
-                        category.setTextColor(item.getCategory().getColor());
-                        category.setTypeface(null,Typeface.BOLD);
-                        content.setTextColor(ContextCompat.getColor(getContext(),android.R.color.primary_text_dark));
-                        content.setTypeface(null,Typeface.NORMAL);
-                    }
+                    // update graphics
+                    lineView.render();
                 }
             });
 
@@ -177,7 +131,7 @@ public class ShoppingListLineAdapter extends ArrayAdapter<ShoppingListLine> impl
 
             //constraint is the result from text you want to filter against.
             //objects is your data set you will filter from
-            if(allowedCategories != null && originalData !=null) {
+            if(allowedCategories.size() > 0 && originalData !=null) {
                 int length= originalData.size();
                 int i=0;
                 while(i<length){
@@ -203,16 +157,19 @@ public class ShoppingListLineAdapter extends ArrayAdapter<ShoppingListLine> impl
 
 
         @Override
-        protected void publishResults(CharSequence contraint, FilterResults results) {
+        protected void publishResults(CharSequence constraint, FilterResults results) {
 
-
+            Log.d(Constants.LOG_TAG,"The filtered data set:"+ filteredData);
+            filteredData = (ArrayList<ShoppingListLine>) results.values;
+            /*
             if (results.count > 0) {
-                filteredData = (ArrayList<ShoppingListLine>) results.values;
-                Log.d(Constants.LOG_TAG,"The filtered data set:"+ filteredData);
+
+
             } else {
                 filteredData=originalData;
-                Log.d(Constants.LOG_TAG,"No data after filtering - uring full data set:"+ filteredData);
+                Log.d(Constants.LOG_TAG,"No data after filtering - using full data set:"+ filteredData);
             }
+            */
             notifyDataSetChanged();
         }
     };
