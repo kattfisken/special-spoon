@@ -1,5 +1,8 @@
 package com.example.sara.dinneraid;
 
+import android.content.ContentValues;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.DialogFragment;
@@ -18,10 +21,11 @@ import java.util.List;
 public class ShoppingActivity extends AppCompatActivity
         implements SelectGroceryCategoriesDialogFragment.GroceryCategoryFilterDialogListener, ClearShoppingLinesFragment.ShoppingLineClearListener, NewLineFragment.NewLineListener {
 
-    ArrayList<ShoppingListLine> shoppingListArray;
-    ShoppingListLineAdapter shoppingListLineAdapter;
-    String filterCategories; //todo refactor so that the filtered categories are held as an array, not as a string
-    int filterDone = 0;
+    private ArrayList<ShoppingListLine> shoppingListArray;
+    private ShoppingListLineAdapter shoppingListLineAdapter;
+    private String filterCategories; //todo refactor so that the filtered categories are held as an array, not as a string
+    private int filterDone = 0;
+    private SQLiteDatabase db;
 
 
     @Override
@@ -40,13 +44,59 @@ public class ShoppingActivity extends AppCompatActivity
             }
         });
 
-        shoppingListArray = new ArrayList<ShoppingListLine>();
-        shoppingListArray.add(new ShoppingListLine("1 l mjölk", new GroceryCategory(this, "Diary")));
-        shoppingListArray.add(new ShoppingListLine("300 g nötkött", new GroceryCategory(this, "Meat")));
-        shoppingListArray.add(new ShoppingListLine("3 röda paprikor", new GroceryCategory(this, "Vegetables")));
-        shoppingListArray.add(new ShoppingListLine("5 gurkor", new GroceryCategory(this, "Vegetables"),true));
-        Log.d(Constants.LOG_TAG, "initialized the static array");
 
+        String[] s1 = {"1 l mjölk", "300g nötkött","3 röda paprikor","5 gurkor"};
+        String[] s2 = {"Diary", "Meat","Vegetables","Vegetables"};
+
+        ShoppingListDbHelper dbHelper = new ShoppingListDbHelper(this);
+        db = dbHelper.getWritableDatabase();
+        Log.d(Constants.LOG_TAG, "opened the db");
+        for (int j = 0; j< s1.length;j++) {
+            ContentValues  contentValues = new ContentValues();
+            contentValues.put(ShoppingListContract.ShoppingListLine.COLUMN_NAME_CONTENT,s1[j]);
+            contentValues.put(ShoppingListContract.ShoppingListLine.COLUMN_NAME_CATEGORY,s2[j]);
+            db.insert(ShoppingListContract.ShoppingListLine.TABLE_NAME,null, contentValues);
+        }
+        Log.v(Constants.LOG_TAG, "loaded the db with dummy records");
+
+
+        db = dbHelper.getReadableDatabase();
+        String[] projection = {
+                ShoppingListContract.ShoppingListLine._ID,
+                ShoppingListContract.ShoppingListLine.COLUMN_NAME_CONTENT,
+                ShoppingListContract.ShoppingListLine.COLUMN_NAME_CATEGORY,
+                ShoppingListContract.ShoppingListLine.COLUMN_NAME_ISDONE
+        };
+        String sortOrder =
+                ShoppingListContract.ShoppingListLine._ID + " DESC";
+        Cursor c = db.query(
+                ShoppingListContract.ShoppingListLine.TABLE_NAME,                     // The table to query
+                projection,                               // The columns to return
+                null,                                // The columns for the WHERE clause
+                null,                            // The values for the WHERE clause
+                null,                                     // don't group the rows
+                null,                                     // don't filter by row groups
+                sortOrder                                 // The sort order
+        );
+
+        Log.v(Constants.LOG_TAG, "loaded a cursor from the db");
+
+        c.moveToFirst();
+        shoppingListArray = new ArrayList<ShoppingListLine>();
+        while(!c.isAfterLast()) {
+            String category = c.getString(c.getColumnIndex(ShoppingListContract.ShoppingListLine.COLUMN_NAME_CATEGORY));
+            String content = c.getString(c.getColumnIndex(ShoppingListContract.ShoppingListLine.COLUMN_NAME_CONTENT));
+            int isdoneInt = c.getInt(c.getColumnIndex(ShoppingListContract.ShoppingListLine.COLUMN_NAME_ISDONE));
+            boolean isdone = isdoneInt != 0;
+
+            shoppingListArray.add(new ShoppingListLine(content, new GroceryCategory(this, category),isdone));
+            c.moveToNext();
+        }
+        c.close();
+
+        Log.d(Constants.LOG_TAG, "converted cursor to array");
+
+        //todo dont convert the cursor to an array - instead let the adapter work on the cursor!1
 
 
         shoppingListLineAdapter = new ShoppingListLineAdapter(
