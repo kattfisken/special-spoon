@@ -1,0 +1,34 @@
+# analysing sqlite3 datbase on android emulator
+#
+
+# ripoff from http://stackoverflow.com/questions/17529766/view-contents-of-database-file-in-android-studio
+
+
+
+# go to the relevant dir where the sdk platformtools are residing...
+# can on linux be found by
+# find / -name 'platform-tools'
+cd /home/ludvig/Android/Sdk/platform-tools/
+
+# check the available devices
+./adb devices 
+
+# connect remotely with adb
+./adb -s emulator-5554 shell
+
+# then run in the "new" terminal...
+
+cd data/data/com.example.sara.dinneraid/databases
+
+
+# start the terminal interface to sqlite3 on the database
+sqlite3 ShoppingList.db
+
+#list all tables
+.tables
+
+# show all lines
+select * from line 
+
+# delete all data from table
+delete from line
