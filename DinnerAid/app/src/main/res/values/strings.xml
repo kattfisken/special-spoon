@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Dinner Aid</string>
     <string name="title_activity_shopping_list">ShoppingListActivity</string>
+    <string name="default_content_text">DefaultContent</string>
+    <string name="default_category_text">DefaultCategory</string>
 
     <!-- n.b. the order of categories matters! they correpond to colors in color.xml -->
     <string-array
@@ -12,4 +14,7 @@
         <item>Colonial</item>
         <item>Flour etc</item>
     </string-array>
+
+    <string name="menu_item_toggle_on">Show done items</string>
+    <string name="menu_item_toggle_off">Hide done items</string>
 </resources>

@@ -1,8 +1,6 @@
 package com.example.sara.dinneraid;
 
-import android.content.ContentValues;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.DialogFragment;
@@ -15,21 +13,21 @@ import android.view.MenuItem;
 import android.view.View;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class ShoppingActivity extends AppCompatActivity
         implements SelectGroceryCategoriesDialogFragment.GroceryCategoryFilterDialogListener, ClearShoppingLinesFragment.ShoppingLineClearListener, NewLineFragment.NewLineListener {
 
     private ArrayList<ShoppingListLine> shoppingListArray;
-    private ShoppingListLineAdapter shoppingListLineAdapter;
-    private String filterCategories; //todo refactor so that the filtered categories are held as an array, not as a string
+    private ShoppingListCursorAdapter shoppingListAdapter;
+    private String[] filterCategories;
     private int filterDone = 0;
-    private SQLiteDatabase db;
+    private Cursor mCursor;
+    private ShoppingListDbHelper dbHelper;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shopping_list);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -45,84 +43,42 @@ public class ShoppingActivity extends AppCompatActivity
         });
 
 
-        String[] s1 = {"1 l mjölk", "300g nötkött","3 röda paprikor","5 gurkor"};
-        String[] s2 = {"Diary", "Meat","Vegetables","Vegetables"};
 
-        ShoppingListDbHelper dbHelper = new ShoppingListDbHelper(this);
-        db = dbHelper.getWritableDatabase();
-        Log.d(Constants.LOG_TAG, "opened the db");
-        for (int j = 0; j< s1.length;j++) {
-            ContentValues  contentValues = new ContentValues();
-            contentValues.put(ShoppingListContract.ShoppingListLine.COLUMN_NAME_CONTENT,s1[j]);
-            contentValues.put(ShoppingListContract.ShoppingListLine.COLUMN_NAME_CATEGORY,s2[j]);
-            db.insert(ShoppingListContract.ShoppingListLine.TABLE_NAME,null, contentValues);
-        }
-        Log.v(Constants.LOG_TAG, "loaded the db with dummy records");
+        dbHelper = new ShoppingListDbHelper(this);
 
+        mCursor = dbHelper.getLines(null);
+        Log.v(Toolbox.LOG_TAG, "loaded a cursor from the db");
 
-        db = dbHelper.getReadableDatabase();
-        String[] projection = {
-                ShoppingListContract.ShoppingListLine._ID,
-                ShoppingListContract.ShoppingListLine.COLUMN_NAME_CONTENT,
-                ShoppingListContract.ShoppingListLine.COLUMN_NAME_CATEGORY,
-                ShoppingListContract.ShoppingListLine.COLUMN_NAME_ISDONE
-        };
-        String sortOrder =
-                ShoppingListContract.ShoppingListLine._ID + " DESC";
-        Cursor c = db.query(
-                ShoppingListContract.ShoppingListLine.TABLE_NAME,                     // The table to query
-                projection,                               // The columns to return
-                null,                                // The columns for the WHERE clause
-                null,                            // The values for the WHERE clause
-                null,                                     // don't group the rows
-                null,                                     // don't filter by row groups
-                sortOrder                                 // The sort order
-        );
-
-        Log.v(Constants.LOG_TAG, "loaded a cursor from the db");
-
-        c.moveToFirst();
-        shoppingListArray = new ArrayList<ShoppingListLine>();
-        while(!c.isAfterLast()) {
-            String category = c.getString(c.getColumnIndex(ShoppingListContract.ShoppingListLine.COLUMN_NAME_CATEGORY));
-            String content = c.getString(c.getColumnIndex(ShoppingListContract.ShoppingListLine.COLUMN_NAME_CONTENT));
-            int isdoneInt = c.getInt(c.getColumnIndex(ShoppingListContract.ShoppingListLine.COLUMN_NAME_ISDONE));
-            boolean isdone = isdoneInt != 0;
-
-            shoppingListArray.add(new ShoppingListLine(content, new GroceryCategory(this, category),isdone));
-            c.moveToNext();
-        }
-        c.close();
-
-        Log.d(Constants.LOG_TAG, "converted cursor to array");
-
-        //todo dont convert the cursor to an array - instead let the adapter work on the cursor!1
-
-
-        shoppingListLineAdapter = new ShoppingListLineAdapter(
-                this
-                ,R.layout.list_item_shopping_line
-                ,shoppingListArray
-        );
-        Log.d(Constants.LOG_TAG, "Created the array adapter");
+        shoppingListAdapter = new ShoppingListCursorAdapter(this, mCursor,0,dbHelper);
+        Log.d(Toolbox.LOG_TAG, "Created the array adapter");
 
 
         ListViewCompat shoppingList = (ListViewCompat) findViewById(R.id.list_shopping);
         if (shoppingList != null) {
-            shoppingList.setAdapter(shoppingListLineAdapter);
+            shoppingList.setAdapter(shoppingListAdapter);
         } else {
-            Log.e(Constants.LOG_TAG,"Couldn't find the listView for list items. Did the inflater fail?");
+            Log.e(Toolbox.LOG_TAG,"Couldn't find the listView for list items. Did the inflater fail?");
         }
 
         resetFilterValues();
-        Log.d(Constants.LOG_TAG, "onCreate finished");
+        Log.v(Toolbox.LOG_TAG, "onCreate finished");
+    }
+
+    @Override
+    protected void onDestroy() {
+        // these should rather be closed on "stopped" and created at "onStart" to save some memory
+        // that would require some thinking and refactoring though...
+        // https://developer.android.com/training/basics/activity-lifecycle/stopping.html
+        mCursor.close();
+        dbHelper.close();
+        super.onDestroy();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.action_bar_menu, menu);
 
-        Log.d(Constants.LOG_TAG,"Finished making the menu");
+        Log.d(Toolbox.LOG_TAG,"Finished making the menu");
         return true;
     }
 
@@ -131,16 +87,21 @@ public class ShoppingActivity extends AppCompatActivity
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.menu_item_filter:
-                Log.d(Constants.LOG_TAG,"want to edit filters");
+                Log.d(Toolbox.LOG_TAG,"want to edit filters");
                 askForCategoryFilterDialog();
                 return true;
             case R.id.menu_item_toggle_completed:
-                Log.d(Constants.LOG_TAG,"want to toggle copmleted");
+                Log.d(Toolbox.LOG_TAG,"want to toggle copmleted");
                 filterDone = 1-filterDone;
-                filterAdapter();
+                String s_off = getString(R.string.menu_item_toggle_off);
+                String s_on = getString(R.string.menu_item_toggle_on);
+                String s_old = item.getTitle().toString();
+                String s_new = (s_old.equals(s_off)) ? s_on : s_off;
+                item.setTitle(s_new);
+                refreshAdapterData();
                 return true;
             case R.id.menu_item_clear:
-                Log.d(Constants.LOG_TAG,"want to clear lines");
+                Log.d(Toolbox.LOG_TAG,"want to clear lines");
                 clearLinesDialog();
                 return true;
             default:
@@ -164,43 +125,46 @@ public class ShoppingActivity extends AppCompatActivity
     }
 
     @Override
-    public void addShoppingListLine(ShoppingListLine item) {
-        shoppingListLineAdapter.add(item);
+    public void addShoppingListLine(String content, String category) {
+        dbHelper.addShoppingLine(content,category);
+
+        refreshAdapterData();
+
     }
 
-    @Override
-    public void filterShoppingList(String filterString) {
-        filterCategories = filterString;
-        filterAdapter();
+    public void filterShoppingList(String[] filterCategories) {
+        this.filterCategories = filterCategories;
+        refreshAdapterData();
     }
 
-    public void filterAdapter() {
-        Log.d(Constants.LOG_TAG,"now we want to filter! String:"+filterDone+filterCategories);
-        shoppingListLineAdapter.getFilter().filter(filterDone+filterCategories);
+    public void refreshAdapterData() {
+
+        String filterCategoriesString = '"'+ Toolbox.join(filterCategories,"\",\"")+'"';
+        Log.d(Toolbox.LOG_TAG,"Running refreshAdapterData() with filtering string: "+filterDone+filterCategoriesString);
+        shoppingListAdapter.getFilter().filter(filterDone+filterCategoriesString);
     }
 
     @Override
     public void clearAll() {
-        shoppingListLineAdapter.clear();
+
+        dbHelper.dropAllShoppingLines();
+
+        refreshAdapterData();
+
     }
 
     @Override
     public void clearDone() {
-        shoppingListLineAdapter.clearDone();
-        shoppingListLineAdapter.getFilter().filter(filterDone+filterCategories);
+
+        dbHelper.dropCompletedShoppingLines();
+
+        refreshAdapterData();
     }
 
     private void resetFilterValues() {
 
-        // todo remake so filtering is not held as a string, only is passed as a string
         filterDone = 0;
-        List<String> allowedCategories = Arrays.asList(getResources().getStringArray(R.array.grocery_categories));
-        StringBuilder sb = new StringBuilder();
-        String sep = "";
-        for(String s: allowedCategories) {
-            sb.append(sep).append(s);
-            sep = ",";
-        }
-        filterCategories = sb.toString();
+        filterCategories = getResources().getStringArray(R.array.grocery_categories);
+        Log.v(Toolbox.LOG_TAG,"reset filters");
     }
 }

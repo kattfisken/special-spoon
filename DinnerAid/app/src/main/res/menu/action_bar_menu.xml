@@ -9,7 +9,7 @@
 
     <item
         android:id="@+id/menu_item_toggle_completed"
-        android:title="Toggle done items"
+        android:title="@string/menu_item_toggle_off"
         android:icon="@android:drawable/checkbox_on_background"
         app:showAsAction="ifRoom"/>
 

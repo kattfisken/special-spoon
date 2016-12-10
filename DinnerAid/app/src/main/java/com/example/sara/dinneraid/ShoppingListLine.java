@@ -8,7 +8,7 @@ public class ShoppingListLine {
     private String content;
     private boolean isDone;
     private GroceryCategory category;
-    private int color;
+    private int id;
 
 
     public GroceryCategory getCategory() {
@@ -23,15 +23,16 @@ public class ShoppingListLine {
         return content;
     }
 
-    public ShoppingListLine( String inContent, GroceryCategory inCategory) {
+    public ShoppingListLine( String inContent, GroceryCategory inCategory, int inId) {
         // provide default value for inDone
-        this(inContent,inCategory,false);
+        this(inContent,inCategory,false, inId);
     }
 
-    public ShoppingListLine(String inContent, GroceryCategory inCategory, boolean inDone) {
+    public ShoppingListLine(String inContent, GroceryCategory inCategory, boolean inDone, int inId) {
         category = inCategory;
         content = inContent;
         isDone = inDone;
+        id = inId;
     }
 
     public void toggleDone() {
@@ -41,5 +42,9 @@ public class ShoppingListLine {
     public String toString() {
         String s = isDone ? "[x]" : "[ ]";
         return s+" "+content+" "+" ("+category.toString()+")";
+    }
+
+    public int getId() {
+        return id;
     }
 }

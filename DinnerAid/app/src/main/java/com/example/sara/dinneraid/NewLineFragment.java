@@ -10,13 +10,14 @@ import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatSpinner;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 
 public class NewLineFragment extends DialogFragment {
 
 
     public interface NewLineListener {
-        public void addShoppingListLine(ShoppingListLine item);
+        public void addShoppingListLine(String content,String category);
     }
 
     // Use this instance of the interface to deliver action events
@@ -63,7 +64,7 @@ public class NewLineFragment extends DialogFragment {
                 String content = ((AppCompatEditText) v.findViewById(R.id.new_content)).getText().toString();
                 String category = ((AppCompatSpinner) v.findViewById(R.id.category_spinner)).getSelectedItem().toString();
                 ShoppingActivity activity = ((ShoppingActivity) getActivity());
-                mListener.addShoppingListLine(new ShoppingListLine(content, new GroceryCategory(activity, category)));
+                mListener.addShoppingListLine(content,category);
             }
         });
 
@@ -77,4 +78,14 @@ public class NewLineFragment extends DialogFragment {
         return builder.create();
     }
 
+    /**
+     * Implementation of a bug-hack. The keyboard dont show on my old Samsung Galaxy S2, so this
+     * little hack forces a display of the keyboard.
+     * @param savedInstanceState
+     */
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+        super.onActivityCreated(savedInstanceState);
+    }
 }

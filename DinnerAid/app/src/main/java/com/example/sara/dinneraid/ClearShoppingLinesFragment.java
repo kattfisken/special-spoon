@@ -54,21 +54,21 @@ public class ClearShoppingLinesFragment extends DialogFragment {
                         switch (selectedCase[0]) {
                             case 0:
                                 mListener.clearAll();
-                                Log.d(Constants.LOG_TAG,"Clearing all items.");
+                                Log.d(Toolbox.LOG_TAG,"Clearing all items.");
                                 return;
                             case 1:
                                 mListener.clearDone();
-                                Log.d(Constants.LOG_TAG,"Clearing done items.");
+                                Log.d(Toolbox.LOG_TAG,"Clearing done items.");
                                 return;
                             default:
-                                Log.d(Constants.LOG_TAG,"No button selected");
+                                Log.d(Toolbox.LOG_TAG,"No button selected");
                         }
                     }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-                        Log.d(Constants.LOG_TAG,"Cancelled the clear dialog.");
+                        Log.d(Toolbox.LOG_TAG,"Cancelled the clear dialog.");
                     }
                 });
         return builder.create();
