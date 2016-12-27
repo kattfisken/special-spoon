@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+    <item
+        android:title="Större"
+        android:id="@+id/btn_next_prime"
+        app:showAsAction="ifRoom"
+        />
+    <item
+
+        android:title="Mindre"
+        android:id="@+id/btn_prev_prime"
+        app:showAsAction="ifRoom"
+        />
+
+    <!-- todo lägg till ikoner
+        todo uppdatera text
+    -->
+</menu>
