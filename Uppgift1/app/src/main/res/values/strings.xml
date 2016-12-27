@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Uppg1</string>
+    <string name="app_name">Name Generator</string>
     <string name="add_button_label">Add</string>
     <string name="no_more_names_snackbar">No more names to add</string>
     <string name="delete_dialog_negative">Avbryt</string>

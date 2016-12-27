@@ -1,0 +1,14 @@
+Såhär skapade jag min APK-fil:
+
+1) Starta Android Studio 2.2.3
+2) Öppna projektet Uppgift1
+3) Klicka i menyerna -> Build-> Generate Signed APK och få upp en popup med rubriken "Generate Signed APK"
+4) Välj Create New under sctionen Key Store och få upp nytt popup "New Key Store"
+5) Välj en path under Key Store PAth )tryck på ...-knappen och välj en plats)
+6) Välj ett starkt och bra lösenord under Password och Confirm-rutorna.
+7) Välj namn på nyckeln (jag valde ipmobilekey), lösenord till nyckeln, samt alla certifikatdetaljer.
+8) Klicka "OK" för att stänga dialogen "New Key Store"
+9) Klicka "Next" för att komma vidare och om det är första gången du sätter upp en keystore i android studio ombes du om ett Master Password i en ny dialog.
+10) Välj ett megabra lösenord i Master Password-dialogen och klicka OK. Om ingen dialog visas, gå till nästa steg nedan.
+11) Du bör nu se nästa steg i dialogen "Generate Signed APK". Välj en Destination folder. Jag använde default (Uppgift1/app)
+12) Klicka Finish. Du har nu en fil som heter app-release.apk i rätt mapp.
