@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(MainActivity.this, "Good vibrations!", Toast.LENGTH_SHORT).show();
         }else{
             //message
-            Toast.makeText(MainActivity.this, "There is no vibraor installed on your device", Toast.LENGTH_LONG).show();
+            Toast.makeText(MainActivity.this, "There is no vibrator installed on your device", Toast.LENGTH_LONG).show();
         }
 
 
