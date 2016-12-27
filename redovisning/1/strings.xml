@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">Name Generator</string>
+    <string name="add_button_label">Add</string>
+    <string name="no_more_names_snackbar">No more names to add</string>
+    <string name="delete_dialog_negative">Avbryt</string>
+    <string name="delete_dialog_positive">Ta bort</string>
+    <string name="delete_dialog_message">Vill du ta bort namnet från listan?</string>
+    <string-array name="long_list_of_names">
+        <item>Ludvig</item>
+        <item>Pelle</item><item>Nisse</item>
+        <item>Jan</item>
+        <item>Karl</item>
+        <item>Carl-Gustaf</item>
+        <item>Gustaf</item>
+        <item>Gustav</item>
+        <item>Nils</item>
+        <item>Carl-Olov</item>
+        <item>Julius</item>
+        <item>Brutus</item>
+        <item>Gustav-Adolf</item>
+    </string-array>
+</resources>
