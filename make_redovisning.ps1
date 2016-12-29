@@ -35,6 +35,9 @@ Copy-Item ..\Uppgift2\app\src\main\res\layout\* 2\.
 mkdir 3
 Copy-Item ..\Uppgift3\app\build.gradle 3
 Copy-Item ..\Uppgift3\app\src\main\AndroidManifest.xml 3
+Copy-Item ..\Uppgift3\app\src\main\java\com\example\sara\uppgift3\MainActivity.java 3
+Copy-Item ..\Uppgift3\app\src\main\res\layout\activity_main.xml 3
+Copy-Item ..\Uppgift3\app\src\main\res\values\dimens.xml 3
 
 ## collect files for uppgift 7.2.2
 mkdir 7.2.2
@@ -42,3 +45,5 @@ Copy-Item ..\Uppgift7.2.2\app\src\main\java\com\example\sara\uppgift722\MainActi
 Copy-Item ..\Uppgift7.2.2\app\src\main\res\drawable\* 7.2.2\.
 Copy-Item ..\Uppgift7.2.2\app\src\main\res\layout\activity_main.xml 7.2.2
 Copy-Item ..\Uppgift7.2.2\app\src\main\AndroidManifest.xml 7.2.2
+Copy-Item ..\Uppgift7.2.2\app\src\main\res\values\dimens.xml 7.2.2
+Copy-Item ..\Uppgift7.2.2\app\src\main\res\values\strings.xml 7.2.2
