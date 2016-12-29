@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.Toast;
 
 /**
- * Starts the app.
+ * The applications only activity. Starts when the app button is pressed.
  */
 public class MainActivity extends AppCompatActivity {
     /**
