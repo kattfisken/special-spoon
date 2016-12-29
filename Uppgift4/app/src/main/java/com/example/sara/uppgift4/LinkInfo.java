@@ -2,32 +2,47 @@ package com.example.sara.uppgift4;
 
 import java.io.Serializable;
 
-public class LinkInfo implements Serializable {
+/**
+ * A container class for holding the information about cat links. Nothing in the implementation is
+ * specific about cats though...
+ */
+class LinkInfo implements Serializable{
 
-        public String linkType;
-        public String data;
-        public String title;
+    String linkType;
+    String data;
+    String title;
 
-        public static  final String YOUTUBE_LINK = "youtube_video";
-        public static  final String WEB_PAGE_LINK = "web_page";
-
-
-        public LinkInfo (String linkType_input,String tu,String i){
-            data = tu;
-            title = i;
-            linkType = linkType_input;
-        }
+    static final String YOUTUBE_LINK = "youtube_video";
+    static final String WEB_PAGE_LINK = "web_page";
 
 
-    public String getUrl() {
-        String s;
-        //todo förklara skillnad på == och equals
+    /**
+     * Default constructor. Simply stores all the data in a container object.
+     *
+     * @param linkTypeInput Must be either the constant LinkInfo.YOUTUBE_LINK or
+     *                      LinkInfo.WEB_PAGE_LINK
+     * @param dataInput     A Youtube video ID or a url to a web page.
+     * @param titleInput    The title of the link.
+     */
+    LinkInfo(String linkTypeInput, String dataInput, String titleInput) {
+        data = dataInput;
+        title = titleInput;
+        linkType = linkTypeInput;
+    }
+
+
+    /**
+     * Formatting funtion for getting an URL to a resource.
+     *
+     * @return an URL, starting with http(s)://
+     */
+    String getUrl() {
+
         if (linkType.equals(YOUTUBE_LINK)) {
-            s = "https://www.youtube.com/watch?v="+data;
-        } else  {
-            s = data;
+            return "https://www.youtube.com/watch?v=" + data;
+        } else {
+            return data;
         }
-        return s;
     }
 
 }

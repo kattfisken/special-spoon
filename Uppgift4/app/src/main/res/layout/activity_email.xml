@@ -47,7 +47,7 @@
             android:id="@+id/email_btn_attachment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/attatchement_button_text"
+            android:text="@string/attachement_button_text"
             android:layout_below="@id/input_title" />
 
         <android.support.v7.widget.AppCompatEditText

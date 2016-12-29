@@ -31,13 +31,26 @@ Copy-Item ..\Uppgift2\app\src\main\res\values\strings.xml 2
 Copy-Item ..\Uppgift2\app\src\main\res\values\styles.xml 2
 Copy-Item ..\Uppgift2\app\src\main\res\layout\* 2\.
 
-## collect files for uppgift 3
+## collect files for uppgift 3.1 - 3.3
 mkdir 3
 Copy-Item ..\Uppgift3\app\build.gradle 3
 Copy-Item ..\Uppgift3\app\src\main\AndroidManifest.xml 3
 Copy-Item ..\Uppgift3\app\src\main\java\com\example\sara\uppgift3\MainActivity.java 3
 Copy-Item ..\Uppgift3\app\src\main\res\layout\activity_main.xml 3
 Copy-Item ..\Uppgift3\app\src\main\res\values\dimens.xml 3
+Copy-Item ..\Uppgift3\app\src\main\res\values\strings.xml 3
+
+## collect files for uppgift 4.1.1 - 4.1.3
+mkdir 4.1
+Copy-Item ..\Uppgift4\app\build.gradle 4.1
+Copy-Item ..\Uppgift4\app\src\main\AndroidManifest.xml 4.1
+Copy-Item ..\Uppgift4\app\src\main\java\com\example\sara\uppgift4\* 4.1\.
+Copy-Item ..\Uppgift4\app\src\main\res\layout\* 4.1\.
+Copy-Item ..\Uppgift4\app\src\main\res\values\dimens.xml 4.1
+Copy-Item ..\Uppgift4\app\src\main\res\values\strings.xml 4.1
+
+
+
 
 ## collect files for uppgift 7.2.2
 mkdir 7.2.2

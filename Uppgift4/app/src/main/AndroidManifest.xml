@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.sara.uppgift4">
     <uses-permission android:name="android.permission.INTERNET"/>
     <application
@@ -7,7 +8,11 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:ignore="AllowBackup,GoogleAppIndexingWarning">
+        <!-- I have not set up backup rules, so please dont show
+        warnings in android studio about it! -->
+        <!-- I don't care about google search indexing either... suppress! -->
 
         <activity android:name=".MainActivity">
             <intent-filter>
@@ -15,8 +20,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".BrowserActivity"
-            android:parentActivityName=".MainActivity">
+        <activity android:name=".BrowserActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />

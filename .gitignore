@@ -38,5 +38,9 @@ Thumbs.db
 
 
 
-# apkpackages
+# apk packages are just compilation.... can be ignored.
 *.apk
+
+# 
+/redovisning/*/*
+!/redovisning/readme.txt

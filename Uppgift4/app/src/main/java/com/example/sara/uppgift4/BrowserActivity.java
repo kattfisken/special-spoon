@@ -1,18 +1,28 @@
 package com.example.sara.uppgift4;
 
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
 
-
+/**
+ * An activity that present a browser window in the app.
+ */
 public class BrowserActivity extends AppCompatActivity {
 
+    /**
+     * Lifecycle onCreate as usual...
+     * Makes the app present a full screen web page with the url passed in the intent staring this
+     * activity
+     * @param savedInstanceState not used.
+     */
+    @SuppressLint("SetJavaScriptEnabled") //this is a security risk that I'm willing to take!
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -20,7 +30,11 @@ public class BrowserActivity extends AppCompatActivity {
 
 
         ActionBar ab = getSupportActionBar();
-        ab.setDisplayHomeAsUpEnabled(true);
+        if (ab != null) {
+            ab.setDisplayHomeAsUpEnabled(true);
+        } else {
+            Log.e(Constants.LOG_TAG,"Critical error! No actionbar found!");
+        }
 
 
         WebView wv = (WebView) findViewById(R.id.web_view);
