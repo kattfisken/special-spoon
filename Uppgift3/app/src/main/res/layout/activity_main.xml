@@ -46,7 +46,7 @@
         android:layout_below="@+id/textView_audio"
         android:layout_toRightOf="@id/btn_stop_audio_recording"
         android:id="@+id/btn_play_audio"
-        android:onClick="listen"
+        android:onClick="playAudio"
         />
 
     <ImageButton
@@ -57,7 +57,7 @@
         android:layout_below="@+id/textView_audio"
         android:layout_toRightOf="@id/btn_play_audio"
         android:id="@+id/btn_stop_audio_playback"
-        android:onClick="stopPlayBack"
+        android:onClick="stopAudio"
         />
 
     <TextView

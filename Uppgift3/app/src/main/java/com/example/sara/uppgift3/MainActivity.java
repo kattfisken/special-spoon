@@ -1,35 +1,32 @@
 package com.example.sara.uppgift3;
 
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.MediaController;
 import android.widget.RelativeLayout;
 import android.widget.VideoView;
 
 import java.io.IOException;
 
+/**
+ * Main activity for the media diary.
+ */
 public class MainActivity extends AppCompatActivity {
-    boolean generateNewPopUp = true;
+    boolean generateWelcomePopUp = true;
     MediaRecorder mr = null;
-    String myAudio;
-    final String LOG_TAG = "uppg3";
+    String pathToTheAudioFile;
+    final String LOG_TAG = "MediaDiary";
     MediaPlayer mp = null;
     Uri videoUri = null;
     static final int REQUEST_VIDEO_CAPTURE = 1;
@@ -40,8 +37,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        // jag vet inte
-        myAudio = Environment.getExternalStorageDirectory().getAbsolutePath() + "/myAudio.3gp";
+
+        pathToTheAudioFile = Environment.getExternalStorageDirectory().getAbsolutePath() + "/pathToTheAudioFile.3gp";
 
         ImageButton ib = (ImageButton) findViewById(R.id.btn_stop_audio_playback);
         ib.setEnabled(false);
@@ -54,124 +51,208 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Normal onStart method.
+     * Displays a welcome message if it is the first time the app is opened.
+     */
     @Override
     protected void onStart(){
         super.onStart();
-        if(generateNewPopUp){
+        if(generateWelcomePopUp){
             AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-            //builder.setCancelable(true);
-            builder.setMessage(getString(R.string.info_about_app));
-            builder.setPositiveButton("OK",null);
-            //builder.setNegativeButton(R.string.delete_dialog_negative, null);
+            builder.setMessage(getString(R.string.welcome_popup_text));
+            builder.setPositiveButton(getString(R.string.welcome_popup_button),null);
             builder.show();
             Log.d(LOG_TAG,"popup generated");
-            generateNewPopUp = false;
+            generateWelcomePopUp = false;
         }
     }
+
+    /**
+     * onStop method. Makes sure the Media player is released properly.
+     */
+    @Override
+    protected void onStop() {
+        super.onStop();
+        stopAudio(null);
+        stopRecordAudio(null);
+    }
+
+    /**
+     * Start the audio recording and change the status of what audio buttons one can click.
+     * @param v the view that was clicked. This is to allow of setting click listener via xml. The
+     *          parameter is not used.
+     */
     public void startRecordAudio(View v){
 
         mr = new MediaRecorder();
         mr.setAudioSource(MediaRecorder.AudioSource.MIC);
         mr.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-        mr.setOutputFile(myAudio);
+        mr.setOutputFile(pathToTheAudioFile);
         mr.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
 
         try {
             mr.prepare();
         } catch (IOException e) {
-            Log.e(LOG_TAG,"mr prepared fail");
+            Log.e(LOG_TAG,"preparation of media recorder failed");
             e.printStackTrace();
         }
 
         try {
             mr.start();
          } catch (IllegalStateException e){
-            Log.e(LOG_TAG,"illeagal state couldn't start recording");
+            Log.e(LOG_TAG,"media recorder illeagal state - couldn't start audio recording");
             e.printStackTrace();
         }
 
-        Log.d(LOG_TAG,"writing to file"+myAudio);
-        ImageButton ib = (ImageButton) findViewById(R.id.btn_play_audio);
-        ib.setEnabled(false);
+        Log.d(LOG_TAG,"writing to file"+ pathToTheAudioFile);
 
-        ib = (ImageButton) findViewById(R.id.btn_stop_audio_recording);
-        ib.setEnabled(true);
-
-        ib = (ImageButton) findViewById(R.id.btn_record_audio);
-        ib.setEnabled(false);
-
+        ImageButton ib_play_audio = (ImageButton) findViewById(R.id.btn_play_audio);
+        ImageButton ib_start_audio_rec = (ImageButton) findViewById(R.id.btn_record_audio);
+        ImageButton ib_stop_audio_rec = (ImageButton) findViewById(R.id.btn_stop_audio_recording);
+        if (ib_play_audio != null && ib_stop_audio_rec != null && ib_start_audio_rec != null) {
+            ib_play_audio.setEnabled(false);
+            ib_stop_audio_rec.setEnabled(true);
+            ib_start_audio_rec.setEnabled(false);
+        } else {
+            Log.e(LOG_TAG,"null pointer error - couldnt find all the audio control buttons.");
+        }
 
     }
 
-    public void stopRecordAudio (View v){
+    /**
+     * Stop recording audio.
+     * @param v view parameter to allow xml click registration on buttons.
+     */
+    public void stopRecordAudio (@Nullable  View v){
         if (mr != null) {
             mr.stop();
+            mr.reset(); //this flushes all events on the media recorder. not neccessary unless you get fatals. http://stackoverflow.com/questions/11863488/trying-to-record-voice-in-android-but-getting-error
             mr.release();
             mr = null;
         }
-        ImageButton ib = (ImageButton) findViewById(R.id.btn_play_audio);
-        ib.setEnabled(true);
 
-        ib = (ImageButton) findViewById(R.id.btn_stop_audio_recording);
-        ib.setEnabled(false);
-
-        ib = (ImageButton) findViewById(R.id.btn_record_audio);
-        ib.setEnabled(true);
+        ImageButton ib_play_audio = (ImageButton) findViewById(R.id.btn_play_audio);
+        ImageButton ib_start_audio_rec = (ImageButton) findViewById(R.id.btn_record_audio);
+        ImageButton ib_stop_audio_rec = (ImageButton) findViewById(R.id.btn_stop_audio_recording);
+        if (ib_play_audio != null && ib_stop_audio_rec != null && ib_start_audio_rec != null) {
+            ib_play_audio.setEnabled(true);
+            ib_stop_audio_rec.setEnabled(false);
+            ib_start_audio_rec.setEnabled(true);
+        } else {
+            Log.e(LOG_TAG,"null pointer error - couldnt find all the audio control buttons.");
+        }
 
     }
-    
-    public void listen (View v) {
-        //todo kontrollera att filen finns innan du försöker spela upp den
+
+    /**
+     * Playback of the previously recorded audio file. If the file is not recorded yet or any other
+     * playback error occurs, we get trouble. Such errors are handeled to some extent, but there are
+     * probably non covered edge cases I've missed...
+     * @param v a view parameter for xml click listener registration. not used.
+     */
+    public void playAudio(@Nullable View v) {
 
         mp = new MediaPlayer();
 
         try {
-            mp.setDataSource(myAudio);
-            mp.prepare();
-            mp.start();
-            ImageButton ib = (ImageButton) findViewById(R.id.btn_play_audio);
-            ib.setEnabled(false);
-            ib = (ImageButton) findViewById(R.id.btn_record_audio);
-            ib.setEnabled(false);
-            ib = (ImageButton) findViewById(R.id.btn_stop_audio_playback);
-            ib.setEnabled(true);
+            mp.setDataSource(pathToTheAudioFile);
         } catch (IOException e){
-            Log.d(LOG_TAG,"the file we tried to read is"+myAudio);
-            Log.e(LOG_TAG,"playback failed");
+            Log.d(LOG_TAG,"the file we tried to read is"+ pathToTheAudioFile);
+            Log.e(LOG_TAG,"failed to load the audio - does the file exist?");
+            mp.reset();
+            mp.release();
+            mp = null;
+            return;
+        }
+        try {
+            mp.prepare();
+        } catch (IOException e) {
             e.printStackTrace();
+            Log.d(LOG_TAG,"the file we tried to read is"+ pathToTheAudioFile);
+            Log.e(LOG_TAG,"failed to prepare the media player - is there correct read permissions on the file?");
+            mp.reset();
+            mp.release();
+            mp = null;
+            return;
+        }
+        mp.start();
 
+
+        ImageButton ib_play_audio = (ImageButton) findViewById(R.id.btn_play_audio);
+        ImageButton ib_start_audio_rec = (ImageButton) findViewById(R.id.btn_record_audio);
+        ImageButton ib_stop_audio = (ImageButton) findViewById(R.id.btn_stop_audio_playback);
+        if (ib_play_audio != null && ib_stop_audio != null && ib_start_audio_rec != null) {
+            ib_play_audio.setEnabled(false);
+            ib_stop_audio.setEnabled(true);
+            ib_start_audio_rec.setEnabled(false);
+        } else {
+            Log.e(LOG_TAG,"null pointer error - couldnt find all the audio control buttons.");
         }
     }
 
-    // todo skapa en knapp för att stoppa uppspelningen av ljud.
-
-    //todo se till att onDestroy eller kanske onpause stoppar ljudinspelningen
-
-    public void stopPlayBack (View v){
+    /**
+     * Stop audio playack.
+     * @param v a view parameter to allow xml click listener registration. not in use.
+     */
+    public void stopAudio(@Nullable View v){
         if (mp != null){
             mp.stop();
             mp.release();
             mp = null;
-            ImageButton ib = (ImageButton) findViewById(R.id.btn_stop_audio_playback);
-            ib.setEnabled(false);
-            ib = (ImageButton) findViewById(R.id.btn_play_audio);
-            ib.setEnabled(true);
-            ib = (ImageButton) findViewById(R.id.btn_record_audio);
-            ib.setEnabled(true);
+
+            ImageButton ib_play_audio = (ImageButton) findViewById(R.id.btn_play_audio);
+            ImageButton ib_start_audio_rec = (ImageButton) findViewById(R.id.btn_record_audio);
+            ImageButton ib_stop_audio = (ImageButton) findViewById(R.id.btn_stop_audio_playback);
+            if (ib_play_audio != null && ib_stop_audio != null && ib_start_audio_rec != null) {
+                ib_play_audio.setEnabled(true);
+                ib_stop_audio.setEnabled(false);
+                ib_start_audio_rec.setEnabled(true);
+            } else {
+                Log.e(LOG_TAG,"null pointer error - couldn't find all the audio control buttons. " +
+                        "This is okay if the function is called from the onStop method. :)");
+            }
         }
 
     }
 
+    /**
+     * Ask the android system to record a video via an intent. If there is no video recording app on
+     * the phone, no error message is presented.
+     * @param v a view parameter to allow xml click listener registration.
+     */
     public void recordVideo (View v){
         Intent takeVideoIntent;
         takeVideoIntent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
 
         if(takeVideoIntent.resolveActivity(getPackageManager())!= null){
+            Log.v(LOG_TAG,"starting video capture activity");
             startActivityForResult(takeVideoIntent,REQUEST_VIDEO_CAPTURE);
         }
-        //todo skapa felmeddelande om ifsatsen inte lyckas - snack "failure you have no video in your aPP"
+
     }
 
+    /**
+     * Ask the android system to take a photo via an intent. If there is no photo app on
+     * the phone the method fails quietly.
+     * @param v a view parameter to allow xml click listener registration.
+     */
+    public void takePhoto(View v) {
+        Intent i = new Intent (MediaStore.ACTION_IMAGE_CAPTURE);
+        if(i.resolveActivity(getPackageManager())!= null){
+            Log.v(LOG_TAG,"Starting photo capture activity");
+            startActivityForResult(i,REQUEST_IMAGE_CAPTURE);
+        }
+    }
+
+    /**
+     * Handling of completed video or photo capture. If the activity of photo/video failed, such as
+     * the user pressed the "back" button in the video/photo app, this is not handeled so well...
+     * @param requestCode The requested activity that has now completed. Was passed with the intent.
+     * @param resultCode Standard android result code.
+     * @param data the returning intent from the activity that was completed. carries data of
+     *             interest
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
@@ -181,9 +262,8 @@ public class MainActivity extends AppCompatActivity {
                     videoUri = data.getData();
                     Log.d(LOG_TAG,"The video Uri captured is"+ videoUri);
                     ImageButton ib = (ImageButton) findViewById(R.id.btn_play_video);
-                    ib.setEnabled(true);
+                    if (ib != null) {ib.setEnabled(true);}
                 }else{
-                    //todo videon blev inte sparad medd
                     Log.d(LOG_TAG, "no video captured");
                 }
                 break;
@@ -193,72 +273,58 @@ public class MainActivity extends AppCompatActivity {
                     imgUri = data.getData();
                     Log.d(LOG_TAG,"The image uri captured is"+ imgUri);
                     ImageButton ib = (ImageButton) findViewById(R.id.btn_show_photo);
-                    ib.setEnabled(true);
+                    if (ib != null) {ib.setEnabled(true);}
                 }else{
-                    //todo videon blev inte sparad medd
                     Log.d(LOG_TAG, "no photo captured");
                 }
                 break;
 
-
             default:
-                //todo skapa felmedd om konstigt calback efter activity
-                Log.e(LOG_TAG, "det är fel calback");
+                Log.e(LOG_TAG, "invalid request code sent to onActivityResult method");
         }
     }
 
-    public void playVideo (View v){
+    /**
+     * Mounting a new videoView inside a viewHolder and playing the video latest recorded by this
+     * app.
+     * @param v a view parameter for xml onClick listener registration. not used.
+     */
+    public void playVideo (@Nullable View v){
         if (videoUri == null){
-            Log.d(LOG_TAG,"There is no video");
+            Log.d(LOG_TAG,"There is no video to play.");
         } else {
-            VideoView berta;
-            berta = new VideoView(this);
-
+            VideoView videoView = new VideoView(this);
             RelativeLayout viewHolder = (RelativeLayout) findViewById(R.id.view_holder);
-            viewHolder.removeAllViews();
-            viewHolder.addView(berta);
-
-            berta.setVideoURI(videoUri);
-            berta.start();
-
-            // the media controller is quite ugly.
-            /*MediaController videoControl;
-            videoControl= new MediaController(this);
-            videoControl.setAnchorView(berta);
-            berta.setMediaController(videoControl);
-            */
+            if (viewHolder != null) {
+                viewHolder.removeAllViews();
+                viewHolder.addView(videoView);
+                videoView.setVideoURI(videoUri);
+                videoView.start();
+                Log.v(LOG_TAG,"Playing video");
+            }
         }
 
     }
 
-    public void takePhoto(View v) {
-        Intent i = new Intent (MediaStore.ACTION_IMAGE_CAPTURE);
-        if(i.resolveActivity(getPackageManager())!= null){
-            startActivityForResult(i,REQUEST_IMAGE_CAPTURE);
-        }
-        //todo skapa felmeddelande om ifsatsen inte lyckas - snack "failure you have no video in your aPP"
-    }
 
-    public void showPhoto(View v) {
+    /**
+     * showing the photo last taken with this app
+     * @param v a view parameter for xml onClick listener registration. not used.
+     */
+    public void showPhoto(@Nullable View v) {
         if (imgUri == null){
             Log.d(LOG_TAG,"There is no image");
         } else {
-
-            ImageView pelle;
-            pelle = new ImageView(this);
-
-            pelle.setImageURI(imgUri);
-
-            // todo centrera viewen i sin parent
-
+            ImageView imageView = new ImageView(this);
+            imageView.setImageURI(imgUri);
             RelativeLayout viewHolder = (RelativeLayout) findViewById(R.id.view_holder);
-            viewHolder.removeAllViews();
-            viewHolder.addView(pelle);
-
-            //pelle.setVisibility(ImageView.VISIBLE);
-
+            if (viewHolder != null) {
+                viewHolder.removeAllViews();
+                viewHolder.addView(imageView);
+                imageView.setVisibility(ImageView.VISIBLE);
+                Log.v(LOG_TAG,"displaying the photo");
+            }
         }
-
     }
 
 }
