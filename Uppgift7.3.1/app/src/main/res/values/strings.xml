@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">InternetCheck</string>
+    <string name="good_news_title">Yes</string>
+    <string name="good_news_text">You have connection to internet. At least when we checked to reach Google.com at %tT.</string>
+    <string name="bad_news_title">No</string>
+    <string name="bad_news_text">You do not have connection to internet at the moment. At least we couldn\'t reach Google.com at %tT.</string>
+    <string name="neutral_news_title">Maybe</string>
+    <string name="neutral_news_text">We dont know if you have internet. %s</string>
+</resources>
