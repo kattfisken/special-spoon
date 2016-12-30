@@ -3,7 +3,7 @@
 
 # setup - clean all old files 
 
-cd C:\Users\Sara\Desktop\Skola\ipwebprog\special-spoon\redovisning
+cd C:\Users\Sara\Desktop\Skola\ipmobil\special-spoon\redovisning
 ls -Directory | remove-item -Recurse
 
 
@@ -49,14 +49,27 @@ Copy-Item ..\Uppgift4\app\src\main\res\layout\* 4.1\.
 Copy-Item ..\Uppgift4\app\src\main\res\values\dimens.xml 4.1
 Copy-Item ..\Uppgift4\app\src\main\res\values\strings.xml 4.1
 
+## collect files for uppgift 6.1
+mkdir 6.1
+Copy-Item ..\Uppgift6.1\app\build.gradle 6.1
+Copy-Item ..\Uppgift6.1\app\src\main\AndroidManifest.xml 6.1
+Copy-Item ..\Uppgift6.1\app\src\main\res\values\strings.xml 6.1
+Copy-Item ..\Uppgift6.1\app\src\main\res\layout\*.xml 6.1
+Copy-Item ..\Uppgift6.1\app\src\main\java\com\example\sara\uppgift61\*.java 6.1
 
-
+## collect files for uppgift 7.1.1
+mkdir 7.1.1
+Copy-Item ..\Uppgift7.1.1\app\build.gradle 7.1.1
+Copy-Item ..\Uppgift7.1.1\app\src\main\AndroidManifest.xml 7.1.1
+Copy-Item ..\Uppgift7.1.1\app\src\main\res\values\strings.xml 7.1.1
+Copy-Item ..\Uppgift7.1.1\app\src\main\res\layout\*.xml 7.1.1
+Copy-Item ..\Uppgift7.1.1\app\src\main\java\com\example\sara\uppgift711\*.java 7.1.1
 
 ## collect files for uppgift 7.2.2
 mkdir 7.2.2
+Copy-Item ..\Uppgift7.2.2\app\src\main\AndroidManifest.xml 7.2.2
 Copy-Item ..\Uppgift7.2.2\app\src\main\java\com\example\sara\uppgift722\MainActivity.java 7.2.2
 Copy-Item ..\Uppgift7.2.2\app\src\main\res\drawable\* 7.2.2\.
 Copy-Item ..\Uppgift7.2.2\app\src\main\res\layout\activity_main.xml 7.2.2
-Copy-Item ..\Uppgift7.2.2\app\src\main\AndroidManifest.xml 7.2.2
 Copy-Item ..\Uppgift7.2.2\app\src\main\res\values\dimens.xml 7.2.2
 Copy-Item ..\Uppgift7.2.2\app\src\main\res\values\strings.xml 7.2.2
