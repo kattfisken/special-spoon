@@ -57,6 +57,14 @@ Copy-Item ..\Uppgift6.1\app\src\main\res\values\strings.xml 6.1
 Copy-Item ..\Uppgift6.1\app\src\main\res\layout\*.xml 6.1
 Copy-Item ..\Uppgift6.1\app\src\main\java\com\example\sara\uppgift61\*.java 6.1
 
+## collect files for uppgift 6.2
+mkdir 6.2
+Copy-Item ..\Uppgift6.2\app\build.gradle 6.2
+Copy-Item ..\Uppgift6.2\app\src\main\AndroidManifest.xml 6.2
+Copy-Item ..\Uppgift6.2\app\src\main\res\values\strings.xml 6.2
+Copy-Item ..\Uppgift6.2\app\src\main\res\layout\*.xml 6.2
+Copy-Item ..\Uppgift6.2\app\src\main\java\com\example\sara\uppgift62\*.java 6.2
+
 ## collect files for uppgift 7.1.1
 mkdir 7.1.1
 Copy-Item ..\Uppgift7.1.1\app\build.gradle 7.1.1

@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">SMS app</string>
+    <string name="hint_sms_body_text">compose new sms</string>
+    <string name="hint_sms_recipient_number">recipient number</string>
+    <string name="butn_text">send</string>
+</resources>
