@@ -12,11 +12,21 @@ import android.widget.TextView;
 
 import java.util.Date;
 
-public class HomeMadeAdapter extends CursorAdapter {
+/**
+ * A cursor adapter with a overridden bindView method.
+ */
+class HomeMadeAdapter extends CursorAdapter {
 
 
-    public HomeMadeAdapter (Context context, Cursor cursor, int flags){
-        super(context,cursor,flags);
+    /**
+     * Call to super.
+     *
+     * @param context See superclass documentation.
+     * @param cursor  See superclass documentation.
+     * @param flags   See superclass documentation.
+     */
+    HomeMadeAdapter(Context context, Cursor cursor, int flags) {
+        super(context, cursor, flags);
     }
 
 
@@ -32,10 +42,8 @@ public class HomeMadeAdapter extends CursorAdapter {
     @SuppressLint("InflateParams") //not relevant in this situation
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
-        LayoutInflater homeMadeInflater;
-        homeMadeInflater = LayoutInflater.from(context);
-        return homeMadeInflater.inflate(R.layout.my_two_line_list_item,null);
-        //return homeMadeInflater.inflate(R.layout.my_two_line_list_item,null);
+        LayoutInflater inflater = LayoutInflater.from(context);
+        return inflater.inflate(R.layout.my_two_line_list_item, null);
     }
 
     /**
@@ -43,32 +51,24 @@ public class HomeMadeAdapter extends CursorAdapter {
      *
      * @param view    Existing view, returned earlier by newView
      * @param context Interface to application's global information
-     * @param cursor  The cursor from which to get the data. The cursor is already
+     * @param cursor  The cursor from which to get the data.
      */
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
-        TextView numberTextView;
-        TextView dateTextView;
 
-        numberTextView = (TextView)view.findViewById(android.R.id.text1);
-        dateTextView = (TextView)view.findViewById(android.R.id.text2);
+        TextView numberTextView = (TextView) view.findViewById(android.R.id.text1);
+        TextView dateTextView = (TextView) view.findViewById(android.R.id.text2);
 
-        String numberText;
-        String dateText;
-
+        //number
         int numberColumn = cursor.getColumnIndex(CallLog.Calls.NUMBER);
-        int dateColumn = cursor.getColumnIndex(CallLog.Calls.DATE);
-        numberText = cursor.getString(numberColumn);
-        dateText = cursor.getString(dateColumn);
-
-        //här blir det från sekunder till ett snyggt datum
-        Date callDate;
-        callDate = new Date(Long.valueOf(dateText));
-
-        String formattedDateText = callDate.toString();
-
-
+        String numberText = cursor.getString(numberColumn);
         numberTextView.setText(numberText);
+
+        //date
+        int dateColumn = cursor.getColumnIndex(CallLog.Calls.DATE);
+        String dateText = cursor.getString(dateColumn);
+        Date callDate = new Date(Long.valueOf(dateText));
+        String formattedDateText = callDate.toString();
         dateTextView.setText(formattedDateText);
 
     }

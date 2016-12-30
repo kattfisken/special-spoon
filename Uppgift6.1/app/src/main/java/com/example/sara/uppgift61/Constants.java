@@ -5,5 +5,5 @@ package com.example.sara.uppgift61;
  * components.
  */
 public class Constants {
-    static final String LOG_TAG = "uppgift 6.1";
+    static final String LOG_TAG = "CallLog";
 }
