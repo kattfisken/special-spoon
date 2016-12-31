@@ -2,16 +2,16 @@ package com.example.sara.dinneraid;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CursorAdapter;
 
-public class ShoppingListCursorAdapter extends CursorAdapter {
+/**
+ * A cursor adapter creating ShoppingListLineView objects from the database cursor.
+ */
+class ShoppingListCursorAdapter extends CursorAdapter {
 
-    private LayoutInflater mLayoutInflater;
     private Context mContext;
-    private ShoppingListDbHelper mDbHelper;
 
     /**
      * Recommended constructor.
@@ -22,14 +22,11 @@ public class ShoppingListCursorAdapter extends CursorAdapter {
      *                be any combination of {@link #FLAG_AUTO_REQUERY} and
      *                {@link #FLAG_REGISTER_CONTENT_OBSERVER}.
      */
-    public ShoppingListCursorAdapter(Context context, Cursor c, int flags, ShoppingListDbHelper dbHelper) {
+    ShoppingListCursorAdapter(Context context, Cursor c, int flags, ShoppingListDbHelper dbHelper) {
         super(context, c, flags);
         mContext = context;
-        mLayoutInflater = LayoutInflater.from(context);
-        mDbHelper = dbHelper;
 
         setFilterQueryProvider(dbHelper.new LineFilterer());
-
     }
 
     /**
@@ -62,7 +59,7 @@ public class ShoppingListCursorAdapter extends CursorAdapter {
         int id = cursor.getInt(cursor.getColumnIndex(ShoppingListContract.ShoppingListLine._ID));
         boolean isdone = isdoneInt != 0;
 
-        ShoppingListLine data = new ShoppingListLine(content, new GroceryCategory(mContext, category),isdone,id);
+        ShoppingListLine data = new ShoppingListLine(content, new GroceryCategory(mContext, category), isdone, id);
         v.setData(data);
 
     }

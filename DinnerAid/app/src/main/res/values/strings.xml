@@ -1,8 +1,8 @@
 <resources>
-    <string name="app_name">Dinner Aid</string>
-    <string name="title_activity_shopping_list">ShoppingListActivity</string>
+    <string name="app_name">My Shopping List Aid</string>
+    <string name="title_activity_shopping_list">My Shopping List</string>
     <string name="default_content_text">DefaultContent</string>
-    <string name="default_category_text">DefaultCategory</string>
+    <string name="default_category_text">Unknown</string>
 
     <!-- n.b. the order of categories matters! they correpond to colors in color.xml -->
     <string-array
@@ -17,4 +17,18 @@
 
     <string name="menu_item_toggle_on">Show done items</string>
     <string name="menu_item_toggle_off">Hide done items</string>
+    <string name="menu_item_filter_categories">Filter Categories</string>
+    <string name="menu_item_delete_lines">Clear lines</string>
+    <string name="fragment_new_line_title">New shopping item</string>
+    <string name="fragment_new_line_positive">Create</string>
+    <string name="fragment_new_line_negative">Cancel</string>
+    <string name="fragment_new_line_select_category">Select category</string>
+    <string name="fragment_select_categories_positive">Filter</string>
+    <string name="fragment_select_categories_negative">Cancel</string>
+    <string name="fragment_select_categories_title">Select categories</string>
+    <string name="fragment_new_line_hint">What to buy?</string>
+    <string name="toast_hint_no_content">No category chosen - no item added.</string>
+    <string name="toast_hint_no_item">No content written - no item added.</string>
+    <string name="toast_hint_hide_done">Selected items are hidden</string>
+    <string name="toast_hint_show_done">Selected items are shown</string>
 </resources>

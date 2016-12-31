@@ -3,21 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/menu_item_filter"
-        android:title="Filter Categories"
-        android:icon="@android:drawable/ic_search_category_default"
+        android:title="@string/menu_item_filter_categories"
+        android:icon="@drawable/ic_funnel_filled"
         app:showAsAction="ifRoom"/>
 
     <item
         android:id="@+id/menu_item_toggle_completed"
         android:title="@string/menu_item_toggle_off"
-        android:icon="@android:drawable/checkbox_on_background"
+        android:icon="@drawable/ic_visibility_off_white_24dp"
         app:showAsAction="ifRoom"/>
 
     <item
         android:id="@+id/menu_item_clear"
-        android:title="Clear lines"
-        android:icon="@android:drawable/ic_delete"
-        app:showAsAction="ifRoom"
+        android:title="@string/menu_item_delete_lines"
+        app:showAsAction="never"
         />
 
 </menu>

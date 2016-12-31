@@ -101,3 +101,16 @@ Copy-Item ..\Uppgift7.3.1\app\src\main\java\com\example\sara\internetcheck\MainA
 Copy-Item ..\Uppgift7.3.1\app\src\main\res\layout\activity_main.xml 7.3.1
 Copy-Item ..\Uppgift7.3.1\app\src\main\res\values\strings.xml 7.3.1
 Copy-Item ..\Uppgift7.3.1\app\src\main\res\values\colors.xml 7.3.1
+
+
+## collect files for uppgift 9
+mkdir 9
+Copy-Item ..\DinnerAid\app\build.gradle 9
+Copy-Item ..\DinnerAid\app\src\main\AndroidManifest.xml 9
+Copy-Item ..\DinnerAid\app\src\main\java\com\example\sara\dinneraid\*.java 9
+Copy-Item ..\DinnerAid\app\src\main\res\layout\*.xml 9
+Copy-Item ..\DinnerAid\app\src\main\res\values\strings.xml 9
+Copy-Item ..\DinnerAid\app\src\main\res\values\colors.xml 9
+Copy-Item ..\DinnerAid\app\src\main\res\values\dimens.xml 9
+Copy-Item ..\DinnerAid\app\src\main\res\values\styles.xml 9
+Copy-Item ..\DinnerAid\app\src\main\res\drawable\*.xml 9

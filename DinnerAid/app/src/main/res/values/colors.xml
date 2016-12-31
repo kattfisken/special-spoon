@@ -8,11 +8,11 @@
     <color name="color_category_default">#a1887f</color>
     <color name="color_category_done">#bdbdbd</color>
     <color name="colorCategory1">#b71c1c</color>
-    <color name="colorCategory2">#3f51b5</color>
-    <color name="colorCategory3">#1b5e20</color>
+    <color name="colorCategory2">#3949ab</color>
+    <color name="colorCategory3">#43a047</color>
     <color name="colorCategory4">#90caf9</color>
     <color name="colorCategory5">#a1887f</color>
-    <color name="colorCategory6">#ffecb3</color>
+    <color name="colorCategory6">#f9a825</color>
     <integer-array name="category_colors_ids">
         <item>@color/colorCategory1</item>
         <item>@color/colorCategory2</item>

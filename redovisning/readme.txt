@@ -1,6 +1,5 @@
 Inlämning i Internetprogrammering Mobila Enheter.
 
-
 Eftersom vissa uppgifter är så nära sammanlänkade så redovisar jag dem i sin "moderuppgift" (tex uppgift x.y.z ligger i mappen x).
 Se nedan schema.
 
@@ -31,3 +30,5 @@ uppgift | redovisas i mapp...
 7.2.2	| 7.2.2
 ------------------------------------
 7.3.1	| 7.3.1
+------------------------------------
+9	| 9
