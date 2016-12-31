@@ -73,6 +73,17 @@ Copy-Item ..\Uppgift7.1.1\app\src\main\res\values\strings.xml 7.1.1
 Copy-Item ..\Uppgift7.1.1\app\src\main\res\layout\*.xml 7.1.1
 Copy-Item ..\Uppgift7.1.1\app\src\main\java\com\example\sara\uppgift711\*.java 7.1.1
 
+## collect files for uppgift 7.2.1
+mkdir 7.2.1
+Copy-Item ..\Uppgift7.2.1\app\build.gradle 7.2.1
+Copy-Item ..\Uppgift7.2.1\app\src\main\AndroidManifest.xml 7.2.1
+Copy-Item ..\Uppgift7.2.1\app\src\main\java\com\example\sara\uppgift721\*.java 7.2.1
+Copy-Item ..\Uppgift7.2.1\app\src\main\res\layout\*.xml 7.2.1
+Copy-Item ..\Uppgift7.2.1\app\src\main\res\values\dimens.xml 7.2.1
+Copy-Item ..\Uppgift7.2.1\app\src\main\res\values\other_values.xml 7.2.1
+Copy-Item ..\Uppgift7.2.1\app\src\main\res\values\strings.xml 7.2.1
+Copy-Item ..\Uppgift7.2.1\app\src\main\res\values\styles.xml 7.2.1
+
 ## collect files for uppgift 7.2.2
 mkdir 7.2.2
 Copy-Item ..\Uppgift7.2.2\app\src\main\AndroidManifest.xml 7.2.2
@@ -81,3 +92,12 @@ Copy-Item ..\Uppgift7.2.2\app\src\main\res\drawable\* 7.2.2\.
 Copy-Item ..\Uppgift7.2.2\app\src\main\res\layout\activity_main.xml 7.2.2
 Copy-Item ..\Uppgift7.2.2\app\src\main\res\values\dimens.xml 7.2.2
 Copy-Item ..\Uppgift7.2.2\app\src\main\res\values\strings.xml 7.2.2
+
+## collect files for uppgift 7.3.1
+mkdir 7.3.1
+Copy-Item ..\Uppgift7.3.1\app\build.gradle 7.3.1
+Copy-Item ..\Uppgift7.3.1\app\src\main\AndroidManifest.xml 7.3.1
+Copy-Item ..\Uppgift7.3.1\app\src\main\java\com\example\sara\internetcheck\MainActivity.java 7.3.1
+Copy-Item ..\Uppgift7.3.1\app\src\main\res\layout\activity_main.xml 7.3.1
+Copy-Item ..\Uppgift7.3.1\app\src\main\res\values\strings.xml 7.3.1
+Copy-Item ..\Uppgift7.3.1\app\src\main\res\values\colors.xml 7.3.1

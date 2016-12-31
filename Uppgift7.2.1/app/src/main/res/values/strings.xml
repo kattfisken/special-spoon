@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Notifikationsanvändaren</string>
+    <string name="button_text_toast">Make Toast</string>
+    <string name="toast_text">This is a toast</string>
+    <string name="button_text_dialog">Show dialog</string>
+    <string name="text_about_notifications">Notifications are a nice way to present info to the user despite no activity being shown on the screen \n\n Press the button below to get a notification after a few seconds. It is an alarm for you! :)</string>
+    <string name="button_text_notification">Notify me!</string>
+</resources>

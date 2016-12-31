@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Nota Bene: it takes ~5 seconds of overhead for the AlarmManager to create the delay, so
+     effectively, setting this delay to less than 5 means there will be a 5 second delay -->
+    <integer name="notification_delay_seconds">10</integer>
+</resources>
